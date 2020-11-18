@@ -27,7 +27,7 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
         return .none
       } else {
         return Effect(value: .didDismissThird)
-          .delay(for: .seconds(1), scheduler: environment.mainScheduler)
+          .delay(for: environment.stateRemoveOnDismissDelay, scheduler: environment.mainScheduler)
           .eraseToEffect()
       }
 
