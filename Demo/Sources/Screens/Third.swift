@@ -16,6 +16,11 @@ enum ThirdAction: Equatable {
 let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, action, environment in
   switch action {
   case .startTimer:
+    guard state.timerId == nil else {
+      return Effect(value: .stopTimer)
+        .append(.startTimer)
+        .eraseToEffect()
+    }
     let timerId = UUID()
     state.timerId = timerId
     return Effect.timer(id: timerId, every: 1, tolerance: 0, on: environment.mainScheduler)
