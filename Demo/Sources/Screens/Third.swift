@@ -7,6 +7,7 @@ struct ThirdState: Equatable {
 
 enum ThirdAction: Equatable {
   case startTimer
+  case stopTimer
   case timerTick
   case dismissToFirst
 }
@@ -20,6 +21,9 @@ let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, act
       .map { _ in ThirdAction.timerTick }
       .prepend(.timerTick)
       .eraseToEffect()
+
+  case .stopTimer:
+    return .cancel(id: TimerId())
 
   case .timerTick:
     state.date = environment.currentDate()
@@ -67,6 +71,9 @@ struct ThirdView: View {
       .navigationBarTitleDisplayMode(.inline)
       .onAppear {
         viewStore.send(.startTimer)
+      }
+      .onDisappear {
+        viewStore.send(.stopTimer)
       }
     }
   }
