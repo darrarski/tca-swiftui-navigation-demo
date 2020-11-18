@@ -6,7 +6,9 @@ import SwiftUI
 extension Reducer {
   func lifecycle(
     onAppear: @escaping (Environment) -> Effect<Action, Never> = { _ in .none },
-    onDisappear: @escaping (Environment) -> Effect<Never, Never> = { _ in .none }
+    onDisappear: @escaping (Environment) -> Effect<Never, Never> = { _ in .none },
+    file: StaticString = #file,
+    line: UInt = #line
   ) -> Reducer<State?, LifecycleAction<Action>, Environment> {
     .init { state, lifecycleAction, environment in
       switch lifecycleAction {
@@ -18,6 +20,7 @@ extension Reducer {
 
       case let .action(action):
         guard state != nil else {
+          assertionFailure("\nAction was received by a lifecycle reducer when its state was `nil`\nAction: \(action)\nState: \(State.self)\n", file: file, line: line)
           return .none
         }
         return run(&state!, action, environment)
