@@ -28,8 +28,9 @@ let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
 
     case .second(.didDisappear),
          .second(.third(.didDisappear)):
-      if state.isPresentingSecond == false {
+      if state.isPresentingSecond == false, let second = state.second {
         state.second = nil
+        return cancelSecondReducerEffects(state: second)
       }
       return .none
 

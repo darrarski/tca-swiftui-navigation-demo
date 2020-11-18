@@ -1,16 +1,18 @@
+import Combine
 import ComposableArchitecture
 import SwiftUI
 
 struct SecondState: Equatable {
-  let timerId = UUID()
-  var date: Date?
+  let fetchId = UUID()
+  var fetchedDate: Date?
   var isPresentingThird = false
   var third: ThirdState?
 }
 
 enum SecondAction: Equatable {
   case didAppear
-  case didTimerTick
+  case fetchDate
+  case didFetchDate(Date)
   case presentThird(Bool)
   case third(ThirdAction)
   case didDisappear
@@ -25,14 +27,19 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
   Reducer { state, action, environment in
     switch action {
     case .didAppear:
-      return Effect.timer(id: state.timerId, every: .seconds(1), on: environment.mainScheduler)
-        .map { _ in .didTimerTick }
-        .prepend(.didTimerTick)
-        .eraseToEffect()
+      return .init(value: .fetchDate)
 
-    case .didTimerTick:
-      state.date = environment.currentDate()
-      return .none
+    case .fetchDate:
+      return Just(())
+        .delay(for: .seconds(3), scheduler: environment.mainScheduler)
+        .map(environment.currentDate)
+        .map(SecondAction.didFetchDate)
+        .eraseToEffect()
+        .cancellable(id: state.fetchId, cancelInFlight: true)
+
+    case let .didFetchDate(date):
+      state.fetchedDate = date
+      return Effect(value: .fetchDate)
 
     case let .presentThird(present):
       state.isPresentingThird = present
@@ -51,17 +58,21 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
       return .none
 
     case .didDisappear:
-      return .cancel(id: state.timerId)
+      return .none
     }
   }
 )
 
+func cancelSecondReducerEffects<T>(state: SecondState) -> Effect<T, Never> {
+  Effect.cancel(id: state.fetchId).fireAndForget()
+}
+
 struct SecondViewState: Equatable {
-  let date: Date?
+  let fetchedDate: Date?
   let isPresentingThird: Bool
 
   init(state: SecondState) {
-    date = state.date
+    fetchedDate = state.fetchedDate
     isPresentingThird = state.isPresentingThird
   }
 }
@@ -80,7 +91,7 @@ struct SecondView: View {
         Color.green.ignoresSafeArea()
 
         VStack {
-          if let date = viewStore.date {
+          if let date = viewStore.fetchedDate {
             Text(timeFormatter.string(for: date))
               .padding()
           }
