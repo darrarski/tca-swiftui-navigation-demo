@@ -1,7 +1,9 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct ThirdState: Equatable {}
+struct ThirdState: Equatable {
+  var date: Date?
+}
 
 enum ThirdAction: Equatable {
   case dismissToFirst
@@ -10,20 +12,36 @@ enum ThirdAction: Equatable {
 let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment>.empty
 
 struct ThirdViewState: Equatable {
-  init(state: ThirdState) {}
+  let date: Date?
+
+  init(state: ThirdState) {
+    date = state.date
+  }
 }
 
 struct ThirdView: View {
   let store: Store<ThirdState, ThirdAction>
+  @Environment(\.timeFormatter) var timeFormatter
+
+  init(store: Store<ThirdState, ThirdAction>) {
+    self.store = store
+  }
 
   var body: some View {
     WithViewStore(store.scope(state: ThirdViewState.init(state:))) { viewStore in
       ZStack {
         Color.yellow.ignoresSafeArea()
 
-        Button(action: { viewStore.send(.dismissToFirst) }) {
-          Text("Dismiss to First")
-            .padding()
+        VStack {
+          if let date = viewStore.date {
+            Text(timeFormatter.string(for: date))
+              .padding()
+          }
+
+          Button(action: { viewStore.send(.dismissToFirst) }) {
+            Text("Dismiss to First")
+              .padding()
+          }
         }
       }
       .navigationTitle("Third")
