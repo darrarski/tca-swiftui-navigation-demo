@@ -25,7 +25,7 @@ struct AppEnvironment {
 // MARK: - First
 
 struct FirstState: Equatable {
-  var presentSecond = false
+  var isPresentingSecond = false
   var second: SecondState?
 }
 
@@ -44,7 +44,7 @@ let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
   Reducer { state, action, environment in
     switch action {
     case let .presentSecond(present):
-      state.presentSecond = present
+      state.isPresentingSecond = present
       if present {
         state.second = SecondState()
         return .none
@@ -55,7 +55,7 @@ let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
       }
 
     case .didDismissSecond:
-      if state.presentSecond == false {
+      if state.isPresentingSecond == false {
         state.second = nil
       }
       return .none
@@ -70,10 +70,10 @@ let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
 )
 
 struct FirstViewState: Equatable {
-  let presentSecond: Bool
+  let isPresentingSecond: Bool
 
   init(state: FirstState) {
-    presentSecond = state.presentSecond
+    isPresentingSecond = state.isPresentingSecond
   }
 }
 
@@ -90,7 +90,7 @@ struct FirstView: View {
           ),
           then: SecondView.init(store:)
         ),
-        isActive: viewStore.binding(get: \.presentSecond, send: FirstAction.presentSecond),
+        isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
         label: { Text("Present Second") }
       )
       .navigationTitle("First")
@@ -102,7 +102,7 @@ struct FirstView: View {
 // MARK: - Second
 
 struct SecondState: Equatable {
-  var presentThird = false
+  var isPresentingThird = false
   var third: ThirdState?
 }
 
@@ -121,7 +121,7 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
   Reducer { state, action, environment in
     switch action {
     case let .presentThird(present):
-      state.presentThird = present
+      state.isPresentingThird = present
       if present {
         state.third = ThirdState()
         return .none
@@ -132,7 +132,7 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
       }
 
     case .didDismissThird:
-      if state.presentThird == false {
+      if state.isPresentingThird == false {
         state.third = nil
       }
       return .none
@@ -144,10 +144,10 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
 )
 
 struct SecondViewState: Equatable {
-  let presentThird: Bool
+  let isPresentingThird: Bool
 
   init(state: SecondState) {
-    presentThird = state.presentThird
+    isPresentingThird = state.isPresentingThird
   }
 }
 
@@ -167,7 +167,7 @@ struct SecondView: View {
             ),
             then: ThirdView.init(store:)
           ),
-          isActive: viewStore.binding(get: \.presentThird, send: SecondAction.presentThird),
+          isActive: viewStore.binding(get: \.isPresentingThird, send: SecondAction.presentThird),
           label: { Text("Present Third") }
         )
       }
