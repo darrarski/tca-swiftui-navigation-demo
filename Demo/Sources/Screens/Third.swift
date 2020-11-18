@@ -3,7 +3,6 @@ import SwiftUI
 
 struct ThirdState: Equatable {
   var date: Date?
-  var timerId: UUID?
 }
 
 enum ThirdAction: Equatable {
@@ -13,23 +12,19 @@ enum ThirdAction: Equatable {
   case dismissToFirst
 }
 
+let timerId = UUID() // FIXME: timer id should be stored in the state (?)
+
 let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, action, environment in
   switch action {
   case .startTimer:
-    let timerId = UUID()
-    state.timerId = timerId
     return Effect.timer(id: timerId, every: 1, tolerance: 0, on: environment.mainScheduler)
       .map { _ in ThirdAction.timerTick }
       .prepend(.timerTick)
       .eraseToEffect()
 
   case .stopTimer:
-    if let timerId = state.timerId {
-      state.date = nil
-      state.timerId = nil
-      return .cancel(id: timerId)
-    }
-    return .none
+    state.date = nil
+    return .cancel(id: timerId)
 
   case .timerTick:
     state.date = environment.currentDate()
@@ -39,6 +34,11 @@ let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, act
     return .none
   }
 }
+
+let thirdLifecycleReducer = thirdReducer.lifecycle(
+  onAppear: { _ in .init(value: .startTimer) },
+  onDisappear: { _ in .cancel(id: timerId) }
+)
 
 struct ThirdViewState: Equatable {
   let date: Date?
@@ -77,12 +77,6 @@ struct ThirdView: View {
       }
       .navigationTitle("Third")
       .navigationBarTitleDisplayMode(.inline)
-      .onAppear {
-        viewStore.send(.startTimer)
-      }
-      .onDisappear {
-        viewStore.send(.stopTimer)
-      }
     }
   }
 }

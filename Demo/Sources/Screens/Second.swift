@@ -9,11 +9,11 @@ struct SecondState: Equatable {
 enum SecondAction: Equatable {
   case presentThird(Bool)
   case didDismissThird
-  case third(ThirdAction)
+  case third(LifecycleAction<ThirdAction>)
 }
 
 let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
-  thirdReducer.optional().pullback(
+  thirdLifecycleReducer.pullback(
     state: \.third,
     action: /SecondAction.third,
     environment: { $0 }
@@ -43,6 +43,8 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
   }
 )
 
+let secondLifecycleReducer = secondReducer.lifecycle()
+
 struct SecondViewState: Equatable {
   let isPresentingThird: Bool
 
@@ -60,12 +62,12 @@ struct SecondView: View {
         Color.green.ignoresSafeArea()
 
         NavigationLink(
-          destination: IfLetStore(
-            store.scope(
+          destination: LifecycleView(
+            store: store.scope(
               state: \.third,
               action: SecondAction.third
             ),
-            then: ThirdView.init(store:)
+            content: ThirdView.init(store:)
           ),
           isActive: viewStore.binding(get: \.isPresentingThird, send: SecondAction.presentThird),
           label: {

@@ -9,11 +9,11 @@ struct FirstState: Equatable {
 enum FirstAction: Equatable {
   case presentSecond(Bool)
   case didDismissSecond
-  case second(SecondAction)
+  case second(LifecycleAction<SecondAction>)
 }
 
 let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
-  secondReducer.optional().pullback(
+  secondLifecycleReducer.pullback(
     state: \.second,
     action: /FirstAction.second,
     environment: { $0 }
@@ -37,7 +37,7 @@ let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
       }
       return .none
 
-    case .second(.third(.dismissToFirst)):
+    case .second(.action(.third(.action(.dismissToFirst)))):
       return .init(value: .presentSecond(false))
 
     case .second:
@@ -63,12 +63,12 @@ struct FirstView: View {
         Color.blue.ignoresSafeArea()
 
         NavigationLink(
-          destination: IfLetStore(
-            store.scope(
+          destination: LifecycleView(
+            store: store.scope(
               state: \.second,
               action: FirstAction.second
             ),
-            then: SecondView.init(store:)
+            content: SecondView.init(store:)
           ),
           isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
           label: {
