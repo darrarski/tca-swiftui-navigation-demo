@@ -56,26 +56,32 @@ struct FirstView: View {
 
   var body: some View {
     WithViewStore(store.scope(state: FirstViewState.init(state:))) { viewStore in
-      ZStack {
-        Color.blue.ignoresSafeArea()
+      ScrollView {
+        VStack {
+          Text("The first screen is a root view of the navigation stack. Tap the button below to push the second screen onto the stack.")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
 
-        NavigationLink(
-          destination: IfLetStore(
-            store.scope(
-              state: \.second,
-              action: FirstAction.second
+          NavigationLink(
+            destination: IfLetStore(
+              store.scope(
+                state: \.second,
+                action: FirstAction.second
+              ),
+              then: SecondView.init(store:)
             ),
-            then: SecondView.init(store:)
-          ),
-          isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
-          label: {
-            Text("Present Second")
-              .padding()
-          }
-        )
-        .padding()
+            isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
+            label: {
+              Text("Present Second")
+                .padding()
+            }
+          )
+        }
+        .frame(maxWidth: .infinity)
         .background(Color.primary.colorInvert())
+        .padding()
       }
+      .background(Color.blue.ignoresSafeArea())
       .navigationTitle("First")
       .navigationBarTitleDisplayMode(.inline)
     }

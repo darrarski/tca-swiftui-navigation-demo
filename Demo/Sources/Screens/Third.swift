@@ -51,10 +51,12 @@ struct ThirdView: View {
 
   var body: some View {
     WithViewStore(store.scope(state: ThirdViewState.init(state:))) { viewStore in
-      ZStack {
-        Color.orange.ignoresSafeArea()
-
+      ScrollView {
         VStack {
+          Text("The third screen displays the current time. It uses a timer effect, which is bound to the view lifecycle. The timer only ticks when the view is visible. Tap the button below to pop the navigation stack directly to the first view.")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+
           if let date = viewStore.date {
             Text(timeFormatter.string(for: date))
               .padding()
@@ -65,9 +67,11 @@ struct ThirdView: View {
               .padding()
           }
         }
-        .padding()
+        .frame(maxWidth: .infinity)
         .background(Color.primary.colorInvert())
+        .padding()
       }
+      .background(Color.orange.ignoresSafeArea())
       .navigationTitle("Third")
       .navigationBarTitleDisplayMode(.inline)
       .onAppear { viewStore.send(.didAppear) }

@@ -87,10 +87,12 @@ struct SecondView: View {
 
   var body: some View {
     WithViewStore(store.scope(state: SecondViewState.init(state:))) { viewStore in
-      ZStack {
-        Color.green.ignoresSafeArea()
-
+      ScrollView {
         VStack {
+          Text("The second screen fetches the current date every three seconds. This is a use case of subscribing to a long-running effect. Tap the button below to push the third screen onto the navigation stack.")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+
           if let date = viewStore.fetchedDate {
             Text(timeFormatter.string(for: date))
               .padding()
@@ -114,9 +116,11 @@ struct SecondView: View {
             }
           )
         }
-        .padding()
+        .frame(maxWidth: .infinity)
         .background(Color.primary.colorInvert())
+        .padding()
       }
+      .background(Color.green.ignoresSafeArea())
       .navigationTitle("Second")
       .navigationBarTitleDisplayMode(.inline)
       .onAppear { viewStore.send(.didAppear) }
@@ -130,7 +134,9 @@ struct SecondView_Previews: PreviewProvider {
     NavigationView {
       NavigationLink(
         destination: SecondView(store: Store(
-          initialState: SecondState(),
+          initialState: SecondState(
+            fetchedDate: Date()
+          ),
           reducer: .empty,
           environment: ()
         )),
