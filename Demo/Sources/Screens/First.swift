@@ -68,7 +68,10 @@ struct FirstView: View {
           then: SecondView.init(store:)
         ),
         isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
-        label: { Text("Present Second") }
+        label: {
+          Text("Present Second")
+            .padding()
+        }
       )
       .navigationTitle("First")
       .navigationBarTitleDisplayMode(.inline)

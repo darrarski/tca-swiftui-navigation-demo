@@ -23,6 +23,7 @@ struct ThirdView: View {
 
         Button(action: { viewStore.send(.dismissToFirst) }) {
           Text("Dismiss to First")
+            .padding()
         }
       }
       .navigationTitle("Third")
