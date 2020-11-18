@@ -6,10 +6,29 @@ struct ThirdState: Equatable {
 }
 
 enum ThirdAction: Equatable {
+  case startTimer
+  case timerTick
   case dismissToFirst
 }
 
-let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment>.empty
+struct TimerId: Hashable {}
+
+let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, action, environment in
+  switch action {
+  case .startTimer:
+    return Effect.timer(id: TimerId(), every: 1, tolerance: 0, on: environment.mainScheduler)
+      .map { _ in ThirdAction.timerTick }
+      .prepend(.timerTick)
+      .eraseToEffect()
+
+  case .timerTick:
+    state.date = environment.currentDate()
+    return .none
+
+  case .dismissToFirst:
+    return .none
+  }
+}
 
 struct ThirdViewState: Equatable {
   let date: Date?
@@ -46,6 +65,9 @@ struct ThirdView: View {
       }
       .navigationTitle("Third")
       .navigationBarTitleDisplayMode(.inline)
+      .onAppear {
+        viewStore.send(.startTimer)
+      }
     }
   }
 }
