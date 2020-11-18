@@ -79,3 +79,20 @@ struct SecondView: View {
     }
   }
 }
+
+struct SecondView_Previews: PreviewProvider {
+  static var previews: some View {
+    NavigationView {
+      NavigationLink(
+        destination: SecondView(store: Store(
+          initialState: SecondState(),
+          reducer: .empty,
+          environment: ()
+        )),
+        isActive: .constant(true),
+        label: EmptyView.init
+      )
+    }
+    .navigationViewStyle(StackNavigationViewStyle())
+  }
+}

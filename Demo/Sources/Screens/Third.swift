@@ -82,3 +82,22 @@ struct ThirdView: View {
     }
   }
 }
+
+struct ThirdView_Previews: PreviewProvider {
+  static var previews: some View {
+    NavigationView {
+      NavigationLink(
+        destination: ThirdView(store: Store(
+          initialState: ThirdState(
+            date: Date()
+          ),
+          reducer: .empty,
+          environment: ()
+        )),
+        isActive: .constant(true),
+        label: EmptyView.init
+      )
+    }
+    .navigationViewStyle(StackNavigationViewStyle())
+  }
+}
