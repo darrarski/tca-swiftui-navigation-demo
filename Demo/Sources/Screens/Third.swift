@@ -25,6 +25,8 @@ let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, act
 
   case .stopTimer:
     if let timerId = state.timerId {
+      state.date = nil
+      state.timerId = nil
       return .cancel(id: timerId)
     }
     return .none
