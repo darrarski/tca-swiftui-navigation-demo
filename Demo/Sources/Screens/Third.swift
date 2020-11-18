@@ -9,11 +9,15 @@ enum ThirdAction: Equatable {
 
 let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment>.empty
 
+struct ThirdViewState: Equatable {
+  init(state: ThirdState) {}
+}
+
 struct ThirdView: View {
   let store: Store<ThirdState, ThirdAction>
 
   var body: some View {
-    WithViewStore(store) { viewStore in
+    WithViewStore(store.scope(state: ThirdViewState.init(state:))) { viewStore in
       ZStack {
         Color.yellow.ignoresSafeArea()
 
