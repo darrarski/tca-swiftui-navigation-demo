@@ -8,8 +8,7 @@ extension Reducer {
     onAppear: @escaping (Environment) -> Effect<Action, Never> = { _ in .none },
     onDisappear: @escaping (Environment) -> Effect<Never, Never> = { _ in .none }
   ) -> Reducer<State?, LifecycleAction<Action>, Environment> {
-
-    return .init { state, lifecycleAction, environment in
+    .init { state, lifecycleAction, environment in
       switch lifecycleAction {
       case .onAppear:
         return onAppear(environment).map(LifecycleAction.action)
