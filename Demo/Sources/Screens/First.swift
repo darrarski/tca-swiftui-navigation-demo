@@ -8,7 +8,6 @@ struct FirstState: Equatable {
 
 enum FirstAction: Equatable {
   case presentSecond(Bool)
-  case didDismissSecond
   case second(SecondAction)
 }
 
@@ -24,14 +23,11 @@ let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
       state.isPresentingSecond = present
       if present {
         state.second = SecondState()
-        return .none
-      } else {
-        return Effect(value: .didDismissSecond)
-          .delay(for: environment.stateRemoveOnDismissDelay, scheduler: environment.mainScheduler)
-          .eraseToEffect()
       }
+      return .none
 
-    case .didDismissSecond:
+    case .second(.didDisappear),
+         .second(.third(.didDisappear)):
       if state.isPresentingSecond == false {
         state.second = nil
       }

@@ -8,8 +8,8 @@ struct SecondState: Equatable {
 
 enum SecondAction: Equatable {
   case presentThird(Bool)
-  case didDismissThird
   case third(ThirdAction)
+  case didDisappear
 }
 
 let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
@@ -24,20 +24,19 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
       state.isPresentingThird = present
       if present {
         state.third = ThirdState()
-        return .none
-      } else {
-        return Effect(value: .didDismissThird)
-          .delay(for: environment.stateRemoveOnDismissDelay, scheduler: environment.mainScheduler)
-          .eraseToEffect()
       }
+      return .none
 
-    case .didDismissThird:
+    case .third(.didDisappear):
       if state.isPresentingThird == false {
         state.third = nil
       }
       return .none
 
     case .third:
+      return .none
+
+    case .didDisappear:
       return .none
     }
   }
@@ -67,7 +66,10 @@ struct SecondView: View {
             ),
             then: ThirdView.init(store:)
           ),
-          isActive: viewStore.binding(get: \.isPresentingThird, send: SecondAction.presentThird),
+          isActive: viewStore.binding(
+            get: \.isPresentingThird,
+            send: SecondAction.presentThird
+          ),
           label: {
             Text("Present Third")
               .padding()
@@ -78,6 +80,7 @@ struct SecondView: View {
       }
       .navigationTitle("Second")
       .navigationBarTitleDisplayMode(.inline)
+      .onDisappear { viewStore.send(.didDisappear) }
     }
   }
 }
