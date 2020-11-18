@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ThirdState: Equatable {
   var date: Date?
+  var timerId: UUID?
 }
 
 enum ThirdAction: Equatable {
@@ -12,18 +13,21 @@ enum ThirdAction: Equatable {
   case dismissToFirst
 }
 
-struct TimerId: Hashable {}
-
 let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, action, environment in
   switch action {
   case .startTimer:
-    return Effect.timer(id: TimerId(), every: 1, tolerance: 0, on: environment.mainScheduler)
+    let timerId = UUID()
+    state.timerId = timerId
+    return Effect.timer(id: timerId, every: 1, tolerance: 0, on: environment.mainScheduler)
       .map { _ in ThirdAction.timerTick }
       .prepend(.timerTick)
       .eraseToEffect()
 
   case .stopTimer:
-    return .cancel(id: TimerId())
+    if let timerId = state.timerId {
+      return .cancel(id: timerId)
+    }
+    return .none
 
   case .timerTick:
     state.date = environment.currentDate()
