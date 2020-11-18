@@ -57,7 +57,7 @@ struct ThirdView: View {
   var body: some View {
     WithViewStore(store.scope(state: ThirdViewState.init(state:))) { viewStore in
       ZStack {
-        Color.yellow.ignoresSafeArea()
+        Color.orange.ignoresSafeArea()
 
         VStack {
           if let date = viewStore.date {
@@ -70,6 +70,8 @@ struct ThirdView: View {
               .padding()
           }
         }
+        .padding()
+        .background(Color.primary.colorInvert())
       }
       .navigationTitle("Third")
       .navigationBarTitleDisplayMode(.inline)

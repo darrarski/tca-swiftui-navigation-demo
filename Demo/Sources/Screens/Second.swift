@@ -73,6 +73,8 @@ struct SecondView: View {
               .padding()
           }
         )
+        .padding()
+        .background(Color.primary.colorInvert())
       }
       .navigationTitle("Second")
       .navigationBarTitleDisplayMode(.inline)

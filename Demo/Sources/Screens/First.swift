@@ -59,20 +59,26 @@ struct FirstView: View {
 
   var body: some View {
     WithViewStore(store.scope(state: FirstViewState.init(state:))) { viewStore in
-      NavigationLink(
-        destination: IfLetStore(
-          store.scope(
-            state: \.second,
-            action: FirstAction.second
+      ZStack {
+        Color.blue.ignoresSafeArea()
+
+        NavigationLink(
+          destination: IfLetStore(
+            store.scope(
+              state: \.second,
+              action: FirstAction.second
+            ),
+            then: SecondView.init(store:)
           ),
-          then: SecondView.init(store:)
-        ),
-        isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
-        label: {
-          Text("Present Second")
-            .padding()
-        }
-      )
+          isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
+          label: {
+            Text("Present Second")
+              .padding()
+          }
+        )
+        .padding()
+        .background(Color.primary.colorInvert())
+      }
       .navigationTitle("First")
       .navigationBarTitleDisplayMode(.inline)
     }
