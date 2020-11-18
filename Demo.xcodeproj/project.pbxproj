@@ -10,6 +10,10 @@
 		31667548256436AF00F91380 /* DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31667547256436AF00F91380 /* DemoApp.swift */; };
 		3166754C256436B000F91380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3166754B256436B000F91380 /* Assets.xcassets */; };
 		3166755D2564378100F91380 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 3166755C2564378100F91380 /* ComposableArchitecture */; };
+		31908F2525654E5000D2C990 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2425654E5000D2C990 /* First.swift */; };
+		31908F2925654E7500D2C990 /* Second.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2825654E7500D2C990 /* Second.swift */; };
+		31908F2C25654E9B00D2C990 /* Third.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2B25654E9B00D2C990 /* Third.swift */; };
+		31908F3025654ECF00D2C990 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2F25654ECF00D2C990 /* AppEnvironment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,6 +21,10 @@
 		31667547256436AF00F91380 /* DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoApp.swift; sourceTree = "<group>"; };
 		3166754B256436B000F91380 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31667550256436B000F91380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		31908F2425654E5000D2C990 /* First.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = First.swift; sourceTree = "<group>"; };
+		31908F2825654E7500D2C990 /* Second.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second.swift; sourceTree = "<group>"; };
+		31908F2B25654E9B00D2C990 /* Third.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Third.swift; sourceTree = "<group>"; };
+		31908F2F25654ECF00D2C990 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,11 +60,47 @@
 		31667546256436AF00F91380 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				3166754B256436B000F91380 /* Assets.xcassets */,
-				31667547256436AF00F91380 /* DemoApp.swift */,
-				31667550256436B000F91380 /* Info.plist */,
+				31908F3425654EF100D2C990 /* Sources */,
+				31908F3325654EE600D2C990 /* Resources */,
 			);
 			path = Demo;
+			sourceTree = "<group>";
+		};
+		31908F2325654E4400D2C990 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				31908F2425654E5000D2C990 /* First.swift */,
+				31908F2825654E7500D2C990 /* Second.swift */,
+				31908F2B25654E9B00D2C990 /* Third.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		31908F2E25654EBC00D2C990 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				31667547256436AF00F91380 /* DemoApp.swift */,
+				31908F2F25654ECF00D2C990 /* AppEnvironment.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		31908F3325654EE600D2C990 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3166754B256436B000F91380 /* Assets.xcassets */,
+				31667550256436B000F91380 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		31908F3425654EF100D2C990 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				31908F2E25654EBC00D2C990 /* App */,
+				31908F2325654E4400D2C990 /* Screens */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,7 +177,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31908F3025654ECF00D2C990 /* AppEnvironment.swift in Sources */,
+				31908F2525654E5000D2C990 /* First.swift in Sources */,
+				31908F2C25654E9B00D2C990 /* Third.swift in Sources */,
 				31667548256436AF00F91380 /* DemoApp.swift in Sources */,
+				31908F2925654E7500D2C990 /* Second.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +312,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Demo/Info.plist;
+				INFOPLIST_FILE = Demo/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -284,7 +332,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Demo/Info.plist;
+				INFOPLIST_FILE = Demo/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
