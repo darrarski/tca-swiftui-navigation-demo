@@ -2,7 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct ThirdState: Equatable {
-  let timerId = UUID()
+  let timerId: UUID
   var date: Date?
 }
 
@@ -86,6 +86,7 @@ struct ThirdView_Previews: PreviewProvider {
       NavigationLink(
         destination: ThirdView(store: Store(
           initialState: ThirdState(
+            timerId: UUID(),
             date: Date()
           ),
           reducer: .empty,

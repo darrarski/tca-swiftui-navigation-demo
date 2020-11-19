@@ -3,7 +3,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct SecondState: Equatable {
-  let fetchId = UUID()
+  let fetchId: UUID
   var fetchedDate: Date?
   var isPresentingThird = false
   var third: ThirdState?
@@ -44,7 +44,9 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
     case let .presentThird(present):
       state.isPresentingThird = present
       if present {
-        state.third = ThirdState()
+        state.third = ThirdState(
+          timerId: environment.randomId()
+        )
       }
       return .none
 
@@ -135,6 +137,7 @@ struct SecondView_Previews: PreviewProvider {
       NavigationLink(
         destination: SecondView(store: Store(
           initialState: SecondState(
+            fetchId: UUID(),
             fetchedDate: Date()
           ),
           reducer: .empty,
