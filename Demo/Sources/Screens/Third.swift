@@ -16,10 +16,11 @@ enum ThirdAction: Equatable {
 let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, action, environment in
   switch action {
   case .didAppear:
-    return Effect.timer(id: state.timerId, every: 1, on: environment.mainScheduler)
+    return environment.timer()
       .map { _ in .didTimerTick }
       .prepend(.didTimerTick)
       .eraseToEffect()
+      .cancellable(id: state.timerId)
 
   case .didTimerTick:
     state.date = environment.currentDate()
