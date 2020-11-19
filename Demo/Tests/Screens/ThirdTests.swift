@@ -62,6 +62,7 @@ final class ThirdTests: XCTestCase {
         XCTAssertTrue(didSubscribeToTimer)
         didSubscribeToTimer = false
       },
+      .send(.didAppear),
       .send(.didDisappear) {
         $0.timerId = nil
       },
