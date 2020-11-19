@@ -6,14 +6,20 @@ import SwiftUI
 struct DemoApp: App {
   var body: some Scene {
     WindowGroup {
-      NavigationView {
-        FirstView(store: Store(
-          initialState: FirstState(),
-          reducer: firstReducer.debug(),
-          environment: AppEnvironment()
-        ))
+      if isRunningTests == false {
+        NavigationView {
+          FirstView(store: Store(
+            initialState: FirstState(),
+            reducer: firstReducer.debug(),
+            environment: AppEnvironment()
+          ))
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
       }
-      .navigationViewStyle(StackNavigationViewStyle())
     }
+  }
+
+  var isRunningTests: Bool {
+    ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
   }
 }
