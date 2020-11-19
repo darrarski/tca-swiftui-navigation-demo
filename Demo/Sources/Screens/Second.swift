@@ -138,7 +138,7 @@ struct SecondView_Previews: PreviewProvider {
         destination: SecondView(store: Store(
           initialState: SecondState(
             fetchId: UUID(),
-            fetchedDate: Date()
+            fetchedDate: Date(timeIntervalSince1970: 0)
           ),
           reducer: .empty,
           environment: ()
@@ -148,5 +148,6 @@ struct SecondView_Previews: PreviewProvider {
       )
     }
     .navigationViewStyle(StackNavigationViewStyle())
+    .environment(\.timeFormatter, .preview)
   }
 }

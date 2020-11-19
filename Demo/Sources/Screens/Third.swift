@@ -93,7 +93,7 @@ struct ThirdView_Previews: PreviewProvider {
         destination: ThirdView(store: Store(
           initialState: ThirdState(
             timerId: UUID(),
-            date: Date()
+            date: Date(timeIntervalSince1970: 0)
           ),
           reducer: .empty,
           environment: ()
@@ -103,5 +103,6 @@ struct ThirdView_Previews: PreviewProvider {
       )
     }
     .navigationViewStyle(StackNavigationViewStyle())
+    .environment(\.timeFormatter, .preview)
   }
 }

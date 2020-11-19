@@ -91,15 +91,11 @@ struct FirstView: View {
 struct FirstView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
-      NavigationLink(
-        destination: FirstView(store: Store(
-          initialState: FirstState(),
-          reducer: .empty,
-          environment: ()
-        )),
-        isActive: .constant(true),
-        label: EmptyView.init
-      )
+      FirstView(store: Store(
+        initialState: FirstState(),
+        reducer: .empty,
+        environment: ()
+      ))
     }
     .navigationViewStyle(StackNavigationViewStyle())
   }
