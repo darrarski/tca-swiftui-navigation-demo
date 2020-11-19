@@ -4,6 +4,12 @@ import Combine
 import ComposableArchitecture
 
 final class DemoAppTests: XCTestCase {
+  func testShouldNotPresentUIWhenTesting() {
+    let state = DemoAppState(first: FirstState())
+    let viewState = DemoAppViewState(state: state)
+    XCTAssertFalse(viewState.isPresentingUI)
+  }
+
   func testPushSecondPushThirdPopThirdPopSecond() {
     var latestId: UUID!
     let store = TestStore(
