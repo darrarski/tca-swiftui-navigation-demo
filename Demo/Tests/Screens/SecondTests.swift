@@ -61,19 +61,19 @@ final class SecondTests: XCTestCase {
     let idStub = UUID()
     let fetcher = PassthroughSubject<Date, Never>()
     let store = TestStore(
-      initialState: SecondState(
-        fetchId: idStub
-      ),
+      initialState: SecondState(),
       reducer: secondReducer,
       environment: AppEnvironment(
-        randomId: { fatalError() },
+        randomId: { idStub },
         fetcher: { fetcher.first().eraseToAnyPublisher() },
         timer: { fatalError() }
       )
     )
 
     store.assert(
-      .send(.didAppear),
+      .send(.didAppear) {
+        $0.fetchId = idStub
+      },
       .receive(.fetchDate),
       .do {
         fetcher.send(Date(timeIntervalSince1970: 0))
@@ -87,6 +87,22 @@ final class SecondTests: XCTestCase {
       },
       .receive(.didFetchDate(Date(timeIntervalSince1970: 1))) {
         $0.fetchedDate = Date(timeIntervalSince1970: 1)
+      },
+      .receive(.fetchDate),
+      .send(.didDisappear),
+      .do {
+        fetcher.send(Date(timeIntervalSince1970: 2))
+      },
+      .receive(.didFetchDate(Date(timeIntervalSince1970: 2))) {
+        $0.fetchedDate = Date(timeIntervalSince1970: 2)
+      },
+      .receive(.fetchDate),
+      .send(.didAppear),
+      .do {
+        fetcher.send(Date(timeIntervalSince1970: 3))
+      },
+      .receive(.didFetchDate(Date(timeIntervalSince1970: 3))) {
+        $0.fetchedDate = Date(timeIntervalSince1970: 3)
       },
       .receive(.fetchDate),
       .do {

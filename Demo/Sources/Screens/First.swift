@@ -22,9 +22,7 @@ let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
     case let .presentSecond(present):
       state.isPresentingSecond = present
       if present {
-        state.second = SecondState(
-          fetchId: environment.randomId()
-        )
+        state.second = SecondState()
       }
       return .none
 

@@ -3,7 +3,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct SecondState: Equatable {
-  let fetchId: UUID
+  var fetchId: UUID?
   var fetchedDate: Date?
   var isPresentingThird = false
   var third: ThirdState?
@@ -27,7 +27,11 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
   Reducer { state, action, environment in
     switch action {
     case .didAppear:
-      return .init(value: .fetchDate)
+      if state.fetchId == nil {
+        state.fetchId = environment.randomId()
+        return .init(value: .fetchDate)
+      }
+      return .none
 
     case .fetchDate:
       return environment.fetcher()
