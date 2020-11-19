@@ -18,7 +18,7 @@
 		31908F2525654E5000D2C990 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2425654E5000D2C990 /* First.swift */; };
 		31908F2925654E7500D2C990 /* Second.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2825654E7500D2C990 /* Second.swift */; };
 		31908F2C25654E9B00D2C990 /* Third.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2B25654E9B00D2C990 /* Third.swift */; };
-		31908F3025654ECF00D2C990 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2F25654ECF00D2C990 /* AppEnvironment.swift */; };
+		31908F3025654ECF00D2C990 /* DemoAppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2F25654ECF00D2C990 /* DemoAppEnvironment.swift */; };
 		31A9440F25654FFE00AD163B /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A9440E25654FFE00AD163B /* TimeFormatter.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,7 +47,7 @@
 		31908F2425654E5000D2C990 /* First.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = First.swift; sourceTree = "<group>"; };
 		31908F2825654E7500D2C990 /* Second.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second.swift; sourceTree = "<group>"; };
 		31908F2B25654E9B00D2C990 /* Third.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Third.swift; sourceTree = "<group>"; };
-		31908F2F25654ECF00D2C990 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		31908F2F25654ECF00D2C990 /* DemoAppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppEnvironment.swift; sourceTree = "<group>"; };
 		31A9440E25654FFE00AD163B /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				31667547256436AF00F91380 /* DemoApp.swift */,
-				31908F2F25654ECF00D2C990 /* AppEnvironment.swift */,
+				31908F2F25654ECF00D2C990 /* DemoAppEnvironment.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -278,7 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31908F3025654ECF00D2C990 /* AppEnvironment.swift in Sources */,
+				31908F3025654ECF00D2C990 /* DemoAppEnvironment.swift in Sources */,
 				31A9440F25654FFE00AD163B /* TimeFormatter.swift in Sources */,
 				31908F2525654E5000D2C990 /* First.swift in Sources */,
 				31908F2C25654E9B00D2C990 /* Third.swift in Sources */,

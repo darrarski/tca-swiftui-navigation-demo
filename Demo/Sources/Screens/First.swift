@@ -11,7 +11,7 @@ enum FirstAction: Equatable {
   case second(SecondAction)
 }
 
-let firstReducer = Reducer<FirstState, FirstAction, AppEnvironment>.combine(
+let firstReducer = Reducer<FirstState, FirstAction, DemoAppEnvironment>.combine(
   secondReducer.optional().pullback(
     state: \.second,
     action: /FirstAction.second,

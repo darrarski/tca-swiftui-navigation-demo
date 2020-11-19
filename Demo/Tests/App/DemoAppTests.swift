@@ -12,7 +12,7 @@ final class DemoAppTests: XCTestCase {
         isRunningTests: false
       ),
       reducer: demoAppReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: {
           latestId = UUID()
           return latestId
@@ -65,7 +65,7 @@ final class DemoAppTests: XCTestCase {
         isRunningTests: false
       ),
       reducer: demoAppReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: {
           latestId = UUID()
           return latestId

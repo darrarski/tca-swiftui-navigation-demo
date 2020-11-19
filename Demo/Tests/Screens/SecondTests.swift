@@ -12,7 +12,7 @@ final class SecondTests: XCTestCase {
         third: nil
       ),
       reducer: secondReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: { fatalError() },
         fetcher: { fatalError() },
         timer: { fatalError() }
@@ -37,7 +37,7 @@ final class SecondTests: XCTestCase {
         )
       ),
       reducer: secondReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: { fatalError() },
         fetcher: { fatalError() },
         timer: { fatalError() }
@@ -60,7 +60,7 @@ final class SecondTests: XCTestCase {
     let store = TestStore(
       initialState: SecondState(),
       reducer: secondReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: { idStub },
         fetcher: { fetcher.first().eraseToAnyPublisher() },
         timer: { fatalError() }

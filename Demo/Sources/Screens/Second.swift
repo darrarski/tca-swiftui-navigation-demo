@@ -18,7 +18,7 @@ enum SecondAction: Equatable {
   case didDisappear
 }
 
-let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
+let secondReducer = Reducer<SecondState, SecondAction, DemoAppEnvironment>.combine(
   thirdReducer.optional().pullback(
     state: \.third,
     action: /SecondAction.third,

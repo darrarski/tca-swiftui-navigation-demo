@@ -1,7 +1,7 @@
 import Combine
 import ComposableArchitecture
 
-struct AppEnvironment {
+struct DemoAppEnvironment {
   var randomId: () -> UUID = UUID.init
   var fetcher: () -> AnyPublisher<Date, Never> = {
     Just(())

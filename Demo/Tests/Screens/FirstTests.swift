@@ -10,7 +10,7 @@ final class FirstTests: XCTestCase {
         second: nil
       ),
       reducer: firstReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: { fatalError() },
         fetcher: { fatalError() },
         timer: { fatalError() }
@@ -34,7 +34,7 @@ final class FirstTests: XCTestCase {
         )
       ),
       reducer: firstReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: { fatalError() },
         fetcher: { fatalError() },
         timer: { fatalError() }
@@ -64,7 +64,7 @@ final class FirstTests: XCTestCase {
         )
       ),
       reducer: firstReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: { fatalError() },
         fetcher: { fatalError() },
         timer: { fatalError() }

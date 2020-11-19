@@ -13,7 +13,7 @@ enum ThirdAction: Equatable {
   case didDisappear
 }
 
-let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, action, environment in
+let thirdReducer = Reducer<ThirdState, ThirdAction, DemoAppEnvironment> { state, action, environment in
   switch action {
   case .didAppear:
     if state.timerId == nil {

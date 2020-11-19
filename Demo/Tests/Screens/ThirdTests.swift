@@ -15,7 +15,7 @@ final class ThirdTests: XCTestCase {
         date: nil
       ),
       reducer: thirdReducer,
-      environment: AppEnvironment(
+      environment: DemoAppEnvironment(
         randomId: { idStub },
         fetcher: { fatalError() },
         timer: {

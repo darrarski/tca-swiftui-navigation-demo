@@ -11,7 +11,7 @@ enum DemoAppAction: Equatable {
   case first(FirstAction)
 }
 
-let demoAppReducer = Reducer<DemoAppState, DemoAppAction, AppEnvironment>.combine(
+let demoAppReducer = Reducer<DemoAppState, DemoAppAction, DemoAppEnvironment>.combine(
   firstReducer.pullback(
     state: \.first,
     action: /DemoAppAction.first,
@@ -34,7 +34,7 @@ struct DemoApp: App {
       first: FirstState()
     ),
     reducer: demoAppReducer.debug(),
-    environment: AppEnvironment()
+    environment: DemoAppEnvironment()
   )
 
   var body: some Scene {
