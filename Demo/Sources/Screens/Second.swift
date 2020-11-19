@@ -46,9 +46,7 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
     case let .presentThird(present):
       state.isPresentingThird = present
       if present {
-        state.third = ThirdState(
-          timerId: environment.randomId()
-        )
+        state.third = ThirdState()
       }
       return .none
 

@@ -5,7 +5,6 @@ import ComposableArchitecture
 
 final class SecondTests: XCTestCase {
   func testPresentThird() {
-    let idStub = UUID()
     let store = TestStore(
       initialState: SecondState(
         fetchId: UUID(),
@@ -14,7 +13,7 @@ final class SecondTests: XCTestCase {
       ),
       reducer: secondReducer,
       environment: AppEnvironment(
-        randomId: { idStub },
+        randomId: { fatalError() },
         fetcher: { fatalError() },
         timer: { fatalError() }
       )
@@ -23,9 +22,7 @@ final class SecondTests: XCTestCase {
     store.assert(
       .send(.presentThird(true)) {
         $0.isPresentingThird = true
-        $0.third = ThirdState(
-          timerId: idStub
-        )
+        $0.third = ThirdState()
       }
     )
   }

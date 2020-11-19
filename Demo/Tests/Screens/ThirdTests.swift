@@ -5,28 +5,38 @@ import ComposableArchitecture
 
 final class ThirdTests: XCTestCase {
   func testTimer() {
-    let timerId = UUID()
-    let timer = PassthroughSubject<Date, Never>()
+    let idStub = UUID()
+    var timer: PassthroughSubject<Date, Never>!
+    var didSubscribeToTimer = false
     var didCancelTimer = false
     let store = TestStore(
       initialState: ThirdState(
-        timerId: timerId,
+        timerId: nil,
         date: nil
       ),
       reducer: thirdReducer,
       environment: AppEnvironment(
-        randomId: { fatalError() },
+        randomId: { idStub },
         fetcher: { fatalError() },
         timer: {
-          timer.handleEvents(receiveCancel: { didCancelTimer = true })
+          timer = PassthroughSubject()
+          return timer
+            .handleEvents(
+              receiveSubscription: { _ in didSubscribeToTimer = true },
+              receiveCancel: { didCancelTimer = true }
+            )
             .eraseToAnyPublisher()
         }
       )
     )
 
     store.assert(
-      .send(.didAppear),
+      .send(.didAppear) {
+        $0.timerId = idStub
+      },
       .do {
+        XCTAssertTrue(didSubscribeToTimer)
+        didSubscribeToTimer = false
         timer.send(Date(timeIntervalSince1970: 0))
       },
       .receive(.didTimerTick(Date(timeIntervalSince1970: 0))) {
@@ -38,9 +48,26 @@ final class ThirdTests: XCTestCase {
       .receive(.didTimerTick(Date(timeIntervalSince1970: 1))) {
         $0.date = Date(timeIntervalSince1970: 1)
       },
-      .send(.didDisappear),
+      .send(.didDisappear) {
+        $0.timerId = nil
+      },
       .do {
         XCTAssertTrue(didCancelTimer)
+        didCancelTimer = false
+      },
+      .send(.didAppear) {
+        $0.timerId = idStub
+      },
+      .do {
+        XCTAssertTrue(didSubscribeToTimer)
+        didSubscribeToTimer = false
+      },
+      .send(.didDisappear) {
+        $0.timerId = nil
+      },
+      .do {
+        XCTAssertTrue(didCancelTimer)
+        didCancelTimer = false
       }
     )
   }

@@ -2,7 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct ThirdState: Equatable {
-  let timerId: UUID
+  var timerId: UUID?
   var date: Date?
 }
 
@@ -16,10 +16,14 @@ enum ThirdAction: Equatable {
 let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, action, environment in
   switch action {
   case .didAppear:
-    return environment.timer()
-      .map(ThirdAction.didTimerTick)
-      .eraseToEffect()
-      .cancellable(id: state.timerId)
+    if state.timerId == nil {
+      state.timerId = environment.randomId()
+      return environment.timer()
+        .map(ThirdAction.didTimerTick)
+        .eraseToEffect()
+        .cancellable(id: state.timerId)
+    }
+    return .none
 
   case let .didTimerTick(date):
     state.date = date
@@ -29,7 +33,9 @@ let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, act
     return .none
 
   case .didDisappear:
-    return .cancel(id: state.timerId)
+    let timerId = state.timerId
+    state.timerId = nil
+    return .cancel(id: timerId)
   }
 }
 
