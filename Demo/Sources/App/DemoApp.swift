@@ -33,7 +33,7 @@ struct DemoApp: App {
     initialState: DemoAppState(
       first: FirstState()
     ),
-    reducer: demoAppReducer,
+    reducer: demoAppReducer.debug(),
     environment: AppEnvironment()
   )
 
