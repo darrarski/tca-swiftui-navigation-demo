@@ -12,9 +12,9 @@ final class FirstTests: XCTestCase {
       ),
       reducer: firstReducer,
       environment: AppEnvironment(
-        mainScheduler: DispatchQueue.testScheduler.eraseToAnyScheduler(),
-        currentDate: { fatalError() },
-        randomId: { idStub }
+        randomId: { idStub },
+        fetcher: { fatalError() },
+        timer: { fatalError() }
       )
     )
 
@@ -38,9 +38,9 @@ final class FirstTests: XCTestCase {
       ),
       reducer: firstReducer,
       environment: AppEnvironment(
-        mainScheduler: DispatchQueue.testScheduler.eraseToAnyScheduler(),
-        currentDate: { fatalError() },
-        randomId: { fatalError() }
+        randomId: { fatalError() },
+        fetcher: { fatalError() },
+        timer: { fatalError() }
       )
     )
 
@@ -68,9 +68,9 @@ final class FirstTests: XCTestCase {
       ),
       reducer: firstReducer,
       environment: AppEnvironment(
-        mainScheduler: DispatchQueue.testScheduler.eraseToAnyScheduler(),
-        currentDate: { fatalError() },
-        randomId: { fatalError() }
+        randomId: { fatalError() },
+        fetcher: { fatalError() },
+        timer: { fatalError() }
       )
     )
 

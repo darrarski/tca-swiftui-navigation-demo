@@ -8,7 +8,7 @@ struct ThirdState: Equatable {
 
 enum ThirdAction: Equatable {
   case didAppear
-  case didTimerTick
+  case didTimerTick(Date)
   case dismissToFirst
   case didDisappear
 }
@@ -17,13 +17,12 @@ let thirdReducer = Reducer<ThirdState, ThirdAction, AppEnvironment> { state, act
   switch action {
   case .didAppear:
     return environment.timer()
-      .map { _ in .didTimerTick }
-      .prepend(.didTimerTick)
+      .map(ThirdAction.didTimerTick)
       .eraseToEffect()
       .cancellable(id: state.timerId)
 
-  case .didTimerTick:
-    state.date = environment.currentDate()
+  case let .didTimerTick(date):
+    state.date = date
     return .none
 
   case .dismissToFirst:

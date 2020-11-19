@@ -31,7 +31,6 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
 
     case .fetchDate:
       return environment.fetcher()
-        .map(environment.currentDate)
         .map(SecondAction.didFetchDate)
         .eraseToEffect()
         .cancellable(id: state.fetchId, cancelInFlight: true)

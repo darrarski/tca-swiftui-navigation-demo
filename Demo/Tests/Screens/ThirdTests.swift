@@ -5,10 +5,8 @@ import ComposableArchitecture
 
 final class ThirdTests: XCTestCase {
   func testTimer() {
-    let mainScheduler = DispatchQueue.testScheduler
     let timerId = UUID()
-    var dateStub: Date!
-    let timer = PassthroughSubject<Void, Never>()
+    let timer = PassthroughSubject<Date, Never>()
     var didCancelTimer = false
     let store = TestStore(
       initialState: ThirdState(
@@ -17,9 +15,8 @@ final class ThirdTests: XCTestCase {
       ),
       reducer: thirdReducer,
       environment: AppEnvironment(
-        mainScheduler: mainScheduler.eraseToAnyScheduler(),
-        currentDate: { dateStub },
         randomId: { fatalError() },
+        fetcher: { fatalError() },
         timer: {
           timer.handleEvents(receiveCancel: { didCancelTimer = true })
             .eraseToAnyPublisher()
@@ -28,20 +25,23 @@ final class ThirdTests: XCTestCase {
     )
 
     store.assert(
-      .do { dateStub = Date(timeIntervalSince1970: 0) },
       .send(.didAppear),
-      .receive(.didTimerTick) {
-        $0.date = dateStub
+      .do {
+        timer.send(Date(timeIntervalSince1970: 0))
+      },
+      .receive(.didTimerTick(Date(timeIntervalSince1970: 0))) {
+        $0.date = Date(timeIntervalSince1970: 0)
       },
       .do {
-        dateStub = Date(timeIntervalSinceNow: 1)
-        timer.send(())
+        timer.send(Date(timeIntervalSince1970: 1))
       },
-      .receive(.didTimerTick) {
-        $0.date = dateStub
+      .receive(.didTimerTick(Date(timeIntervalSince1970: 1))) {
+        $0.date = Date(timeIntervalSince1970: 1)
       },
       .send(.didDisappear),
-      .do { XCTAssertTrue(didCancelTimer) }
+      .do {
+        XCTAssertTrue(didCancelTimer)
+      }
     )
   }
 }
