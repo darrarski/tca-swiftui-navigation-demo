@@ -1,4 +1,5 @@
 import XCTest
+import SnapshotTesting
 @testable import Demo
 import Combine
 import ComposableArchitecture
@@ -70,6 +71,27 @@ final class ThirdTests: XCTestCase {
         XCTAssertTrue(didCancelTimer)
         didCancelTimer = false
       }
+    )
+  }
+
+  func testPreviewSnapshot() {
+    assertSnapshot(
+      matching: ThirdView_Previews.previews,
+      as: .image(
+        drawHierarchyInKeyWindow: true,
+        layout: .device(config: .iPhoneXr),
+        traits: .init(userInterfaceStyle: .light)
+      ),
+      named: "light"
+    )
+    assertSnapshot(
+      matching: ThirdView_Previews.previews,
+      as: .image(
+        drawHierarchyInKeyWindow: true,
+        layout: .device(config: .iPhoneXr),
+        traits: .init(userInterfaceStyle: .dark)
+      ),
+      named: "dark"
     )
   }
 }

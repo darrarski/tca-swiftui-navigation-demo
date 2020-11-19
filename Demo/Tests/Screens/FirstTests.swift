@@ -1,4 +1,5 @@
 import XCTest
+import SnapshotTesting
 @testable import Demo
 import ComposableArchitecture
 
@@ -79,6 +80,27 @@ final class FirstTests: XCTestCase {
       .send(.second(.third(.didDisappear))) {
         $0.second = nil
       }
+    )
+  }
+
+  func testPreviewSnapshot() {
+    assertSnapshot(
+      matching: FirstView_Previews.previews,
+      as: .image(
+        drawHierarchyInKeyWindow: true,
+        layout: .device(config: .iPhoneXr),
+        traits: .init(userInterfaceStyle: .light)
+      ),
+      named: "light"
+    )
+    assertSnapshot(
+      matching: FirstView_Previews.previews,
+      as: .image(
+        drawHierarchyInKeyWindow: true,
+        layout: .device(config: .iPhoneXr),
+        traits: .init(userInterfaceStyle: .dark)
+      ),
+      named: "dark"
     )
   }
 }

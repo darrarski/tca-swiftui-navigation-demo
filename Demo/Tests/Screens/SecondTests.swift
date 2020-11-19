@@ -1,4 +1,5 @@
 import XCTest
+import SnapshotTesting
 @testable import Demo
 import Combine
 import ComposableArchitecture
@@ -105,6 +106,27 @@ final class SecondTests: XCTestCase {
       .do {
         fetcher.send(completion: .finished)
       }
+    )
+  }
+
+  func testPreviewSnapshot() {
+    assertSnapshot(
+      matching: SecondView_Previews.previews,
+      as: .image(
+        drawHierarchyInKeyWindow: true,
+        layout: .device(config: .iPhoneXr),
+        traits: .init(userInterfaceStyle: .light)
+      ),
+      named: "light"
+    )
+    assertSnapshot(
+      matching: SecondView_Previews.previews,
+      as: .image(
+        drawHierarchyInKeyWindow: true,
+        layout: .device(config: .iPhoneXr),
+        traits: .init(userInterfaceStyle: .dark)
+      ),
+      named: "dark"
     )
   }
 }
