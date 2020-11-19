@@ -30,8 +30,7 @@ let secondReducer = Reducer<SecondState, SecondAction, AppEnvironment>.combine(
       return .init(value: .fetchDate)
 
     case .fetchDate:
-      return Just(())
-        .delay(for: .seconds(3), scheduler: environment.mainScheduler)
+      return environment.fetcher()
         .map(environment.currentDate)
         .map(SecondAction.didFetchDate)
         .eraseToEffect()
