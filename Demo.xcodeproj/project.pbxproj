@@ -12,6 +12,7 @@
 		3166755D2564378100F91380 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 3166755C2564378100F91380 /* ComposableArchitecture */; };
 		3182EA772566F8D400C9EDD8 /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182EA762566F8D400C9EDD8 /* DemoTests.swift */; };
 		3182EA8E2566FAF500C9EDD8 /* FirstTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182EA8D2566FAF500C9EDD8 /* FirstTests.swift */; };
+		3182EA972566FF4600C9EDD8 /* SecondTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182EA932566FF4300C9EDD8 /* SecondTests.swift */; };
 		31908F2525654E5000D2C990 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2425654E5000D2C990 /* First.swift */; };
 		31908F2925654E7500D2C990 /* Second.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2825654E7500D2C990 /* Second.swift */; };
 		31908F2C25654E9B00D2C990 /* Third.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2B25654E9B00D2C990 /* Third.swift */; };
@@ -38,6 +39,7 @@
 		3182EA762566F8D400C9EDD8 /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTests.swift; sourceTree = "<group>"; };
 		3182EA782566F8D400C9EDD8 /* InfoTests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InfoTests.plist; sourceTree = "<group>"; };
 		3182EA8D2566FAF500C9EDD8 /* FirstTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTests.swift; sourceTree = "<group>"; };
+		3182EA932566FF4300C9EDD8 /* SecondTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTests.swift; sourceTree = "<group>"; };
 		31908F2425654E5000D2C990 /* First.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = First.swift; sourceTree = "<group>"; };
 		31908F2825654E7500D2C990 /* Second.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Second.swift; sourceTree = "<group>"; };
 		31908F2B25654E9B00D2C990 /* Third.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Third.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				3182EA8D2566FAF500C9EDD8 /* FirstTests.swift */,
+				3182EA932566FF4300C9EDD8 /* SecondTests.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			files = (
 				3182EA8E2566FAF500C9EDD8 /* FirstTests.swift in Sources */,
 				3182EA772566F8D400C9EDD8 /* DemoTests.swift in Sources */,
+				3182EA972566FF4600C9EDD8 /* SecondTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
