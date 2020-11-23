@@ -19,6 +19,8 @@ This is a demo project that shows how to implement navigation in SwiftUI iOS app
 - [iOS](https://www.apple.com/pl/ios/) v14.2
 - [ComposableArchitecture](https://github.com/pointfreeco/swift-composable-architecture) v0.9.0
 
+The project contains unit and snapshot tests. Reference images for snapshot tests were recorded using iPhone 12 simulator.
+
 ## 📄 License
 
 Copyright © 2020 Dariusz Rybicki Darrarski
