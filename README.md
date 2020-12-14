@@ -21,6 +21,10 @@ This is a demo project that shows how to implement navigation in SwiftUI iOS app
 
 The project contains unit and snapshot tests. Reference images for snapshot tests were recorded using iPhone 12 simulator.
 
+## ☕️ Do you like the project?
+
+<a href="https://www.buymeacoffee.com/darrarski" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217" style="height: 60px !important;width: 217px !important;" ></a>
+
 ## 📄 License
 
 Copyright © 2020 Dariusz Rybicki Darrarski
