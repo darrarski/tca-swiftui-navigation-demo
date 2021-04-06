@@ -21,6 +21,7 @@
 		31908F2C25654E9B00D2C990 /* Third.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2B25654E9B00D2C990 /* Third.swift */; };
 		31908F3025654ECF00D2C990 /* DemoAppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31908F2F25654ECF00D2C990 /* DemoAppEnvironment.swift */; };
 		31A9440F25654FFE00AD163B /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A9440E25654FFE00AD163B /* TimeFormatter.swift */; };
+		31CBFF6F261D08F5000A3757 /* Reducer+Presents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CBFF6E261D08F5000A3757 /* Reducer+Presents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		31908F2B25654E9B00D2C990 /* Third.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Third.swift; sourceTree = "<group>"; };
 		31908F2F25654ECF00D2C990 /* DemoAppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppEnvironment.swift; sourceTree = "<group>"; };
 		31A9440E25654FFE00AD163B /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
+		31CBFF6E261D08F5000A3757 /* Reducer+Presents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reducer+Presents.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				31908F2E25654EBC00D2C990 /* App */,
 				31908F2325654E4400D2C990 /* Screens */,
 				31A9440D25654FEE00AD163B /* Formatters */,
+				31CBFF6D261D08E2000A3757 /* Utils */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -174,6 +177,14 @@
 				31A9440E25654FFE00AD163B /* TimeFormatter.swift */,
 			);
 			path = Formatters;
+			sourceTree = "<group>";
+		};
+		31CBFF6D261D08E2000A3757 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				31CBFF6E261D08F5000A3757 /* Reducer+Presents.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +300,7 @@
 				31908F2525654E5000D2C990 /* First.swift in Sources */,
 				31908F2C25654E9B00D2C990 /* Third.swift in Sources */,
 				31667548256436AF00F91380 /* DemoApp.swift in Sources */,
+				31CBFF6F261D08F5000A3757 /* Reducer+Presents.swift in Sources */,
 				31908F2925654E7500D2C990 /* Second.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
