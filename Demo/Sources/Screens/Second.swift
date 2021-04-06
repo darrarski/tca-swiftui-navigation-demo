@@ -66,7 +66,7 @@ let secondReducer = Reducer<SecondState, SecondAction, DemoAppEnvironment>.combi
 )
 
 func cancelSecondReducerEffects<T>(state: SecondState) -> Effect<T, Never> {
-  Effect.cancel(id: state.fetchId).fireAndForget()
+  Effect<T, Never>.cancel(id: state.fetchId).fireAndForget()
 }
 
 struct SecondViewState: Equatable {
