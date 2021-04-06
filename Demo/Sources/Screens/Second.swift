@@ -18,56 +18,52 @@ enum SecondAction: Equatable {
   case didDisappear
 }
 
-let secondReducer = Reducer<SecondState, SecondAction, DemoAppEnvironment>.combine(
-  thirdReducer.optional().pullback(
-    state: \.third,
-    action: /SecondAction.third,
-    environment: { $0 }
-  ),
-  Reducer { state, action, environment in
-    switch action {
-    case .didAppear:
-      if state.fetchId == nil {
-        state.fetchId = environment.randomId()
-        return .init(value: .fetchDate)
-      }
-      return .none
-
-    case .fetchDate:
-      return environment.fetcher()
-        .map(SecondAction.didFetchDate)
-        .eraseToEffect()
-        .cancellable(id: state.fetchId, cancelInFlight: true)
-
-    case let .didFetchDate(date):
-      state.fetchedDate = date
-      return Effect(value: .fetchDate)
-
-    case let .presentThird(present):
-      state.isPresentingThird = present
-      if present {
-        state.third = ThirdState()
-      }
-      return .none
-
-    case .third(.didDisappear):
-      if state.isPresentingThird == false {
-        state.third = nil
-      }
-      return .none
-
-    case .third:
-      return .none
-
-    case .didDisappear:
-      return .none
+let secondReducer = Reducer<SecondState, SecondAction, DemoAppEnvironment> { state, action, environment in
+  switch action {
+  case .didAppear:
+    if state.fetchId == nil {
+      state.fetchId = environment.randomId()
+      return .init(value: .fetchDate)
     }
-  }
-)
+    return .none
 
-func cancelSecondReducerEffects<T>(state: SecondState) -> Effect<T, Never> {
-  Effect<T, Never>.cancel(id: state.fetchId).fireAndForget()
+  case .fetchDate:
+    return environment.fetcher()
+      .map(SecondAction.didFetchDate)
+      .eraseToEffect()
+      .cancellable(id: state.fetchId, cancelInFlight: true)
+
+  case let .didFetchDate(date):
+    state.fetchedDate = date
+    return Effect(value: .fetchDate)
+
+  case let .presentThird(present):
+    state.isPresentingThird = present
+    if present {
+      state.third = ThirdState()
+    }
+    return .none
+
+  case .third(.didDisappear):
+    if state.isPresentingThird == false {
+      state.third = nil
+    }
+    return .none
+
+  case .third:
+    return .none
+
+  case .didDisappear:
+    return .none
+  }
 }
+.presents(
+  thirdReducer,
+  cancelEffectsOnDismiss: true,
+  state: \.third,
+  action: /SecondAction.third,
+  environment: { $0 }
+)
 
 struct SecondViewState: Equatable {
   let fetchedDate: Date?

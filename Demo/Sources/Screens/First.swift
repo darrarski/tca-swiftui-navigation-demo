@@ -11,36 +11,35 @@ enum FirstAction: Equatable {
   case second(SecondAction)
 }
 
-let firstReducer = Reducer<FirstState, FirstAction, DemoAppEnvironment>.combine(
-  secondReducer.optional().pullback(
-    state: \.second,
-    action: /FirstAction.second,
-    environment: { $0 }
-  ),
-  Reducer { state, action, environment in
-    switch action {
-    case let .presentSecond(present):
-      state.isPresentingSecond = present
-      if present {
-        state.second = SecondState()
-      }
-      return .none
-
-    case .second(.didDisappear),
-         .second(.third(.didDisappear)):
-      if state.isPresentingSecond == false, let second = state.second {
-        state.second = nil
-        return cancelSecondReducerEffects(state: second)
-      }
-      return .none
-
-    case .second(.third(.dismissToFirst)):
-      return .init(value: .presentSecond(false))
-
-    case .second:
-      return .none
+let firstReducer = Reducer<FirstState, FirstAction, DemoAppEnvironment> { state, action, environment in
+  switch action {
+  case let .presentSecond(present):
+    state.isPresentingSecond = present
+    if present {
+      state.second = SecondState()
     }
+    return .none
+
+  case .second(.didDisappear),
+       .second(.third(.didDisappear)):
+    if state.isPresentingSecond == false {
+      state.second = nil
+    }
+    return .none
+
+  case .second(.third(.dismissToFirst)):
+    return .init(value: .presentSecond(false))
+
+  case .second:
+    return .none
   }
+}
+.presents(
+  secondReducer,
+  cancelEffectsOnDismiss: true,
+  state: \.second,
+  action: /FirstAction.second,
+  environment: { $0 }
 )
 
 struct FirstViewState: Equatable {
