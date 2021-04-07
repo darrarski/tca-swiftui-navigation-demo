@@ -19,11 +19,9 @@ final class SecondTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.presentThird(true)) {
-        $0.third = ThirdState()
-      }
-    )
+    store.send(.presentThird(true)) {
+      $0.third = ThirdState()
+    }
   }
 
   func testDismissThird() {
@@ -42,11 +40,9 @@ final class SecondTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.presentThird(false)) {
-        $0.third = nil
-      }
-    )
+    store.send(.presentThird(false)) {
+      $0.third = nil
+    }
   }
 
   func testFetch() {
@@ -62,44 +58,47 @@ final class SecondTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.didAppear) {
-        $0.fetchId = idStub
-      },
-      .receive(.fetchDate),
-      .do {
-        fetcher.send(Date(timeIntervalSince1970: 0))
-      },
-      .receive(.didFetchDate(Date(timeIntervalSince1970: 0))) {
-        $0.fetchedDate = Date(timeIntervalSince1970: 0)
-      },
-      .receive(.fetchDate),
-      .do {
-        fetcher.send(Date(timeIntervalSince1970: 1))
-      },
-      .receive(.didFetchDate(Date(timeIntervalSince1970: 1))) {
-        $0.fetchedDate = Date(timeIntervalSince1970: 1)
-      },
-      .receive(.fetchDate),
-      .do {
-        fetcher.send(Date(timeIntervalSince1970: 2))
-      },
-      .receive(.didFetchDate(Date(timeIntervalSince1970: 2))) {
-        $0.fetchedDate = Date(timeIntervalSince1970: 2)
-      },
-      .receive(.fetchDate),
-      .send(.didAppear),
-      .do {
-        fetcher.send(Date(timeIntervalSince1970: 3))
-      },
-      .receive(.didFetchDate(Date(timeIntervalSince1970: 3))) {
-        $0.fetchedDate = Date(timeIntervalSince1970: 3)
-      },
-      .receive(.fetchDate),
-      .do {
-        fetcher.send(completion: .finished)
-      }
-    )
+    store.send(.didAppear) {
+      $0.fetchId = idStub
+    }
+
+    store.receive(.fetchDate)
+
+    fetcher.send(Date(timeIntervalSince1970: 0))
+
+    store.receive(.didFetchDate(Date(timeIntervalSince1970: 0))) {
+      $0.fetchedDate = Date(timeIntervalSince1970: 0)
+    }
+
+    store.receive(.fetchDate)
+
+    fetcher.send(Date(timeIntervalSince1970: 1))
+
+    store.receive(.didFetchDate(Date(timeIntervalSince1970: 1))) {
+      $0.fetchedDate = Date(timeIntervalSince1970: 1)
+    }
+
+    store.receive(.fetchDate)
+
+    fetcher.send(Date(timeIntervalSince1970: 2))
+
+    store.receive(.didFetchDate(Date(timeIntervalSince1970: 2))) {
+      $0.fetchedDate = Date(timeIntervalSince1970: 2)
+    }
+
+    store.receive(.fetchDate)
+
+    store.send(.didAppear)
+
+    fetcher.send(Date(timeIntervalSince1970: 3))
+
+    store.receive(.didFetchDate(Date(timeIntervalSince1970: 3))) {
+      $0.fetchedDate = Date(timeIntervalSince1970: 3)
+    }
+
+    store.receive(.fetchDate)
+
+    fetcher.send(completion: .finished)
   }
 
   func testPreviewSnapshot() {

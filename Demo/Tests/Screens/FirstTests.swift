@@ -17,11 +17,9 @@ final class FirstTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.presentSecond(true)) {
-        $0.second = SecondState()
-      }
-    )
+    store.send(.presentSecond(true)) {
+      $0.second = SecondState()
+    }
   }
 
   func testDismissSecond() {
@@ -39,11 +37,9 @@ final class FirstTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.presentSecond(false)) {
-        $0.second = nil
-      }
-    )
+    store.send(.presentSecond(false)) {
+      $0.second = nil
+    }
   }
 
   func testDismissFromThirdToFirst() {
@@ -64,12 +60,11 @@ final class FirstTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.second(.third(.dismissToFirst))),
-      .receive(.presentSecond(false)) {
-        $0.second = nil
-      }
-    )
+    store.send(.second(.third(.dismissToFirst)))
+
+    store.receive(.presentSecond(false)) {
+      $0.second = nil
+    }
   }
 
   func testPreviewSnapshot() {
