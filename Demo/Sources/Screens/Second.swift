@@ -5,7 +5,6 @@ import SwiftUI
 struct SecondState: Equatable {
   var fetchId: UUID?
   var fetchedDate: Date?
-  var isPresentingThird = false
   var third: ThirdState?
 }
 
@@ -15,7 +14,6 @@ enum SecondAction: Equatable {
   case didFetchDate(Date)
   case presentThird(Bool)
   case third(ThirdAction)
-  case didDisappear
 }
 
 let secondReducer = Reducer<SecondState, SecondAction, DemoAppEnvironment> { state, action, environment in
@@ -38,22 +36,10 @@ let secondReducer = Reducer<SecondState, SecondAction, DemoAppEnvironment> { sta
     return Effect(value: .fetchDate)
 
   case let .presentThird(present):
-    state.isPresentingThird = present
-    if present {
-      state.third = ThirdState()
-    }
-    return .none
-
-  case .third(.didDisappear):
-    if state.isPresentingThird == false {
-      state.third = nil
-    }
+    state.third = present ? ThirdState() : nil
     return .none
 
   case .third:
-    return .none
-
-  case .didDisappear:
     return .none
   }
 }
@@ -67,11 +53,9 @@ let secondReducer = Reducer<SecondState, SecondAction, DemoAppEnvironment> { sta
 
 struct SecondViewState: Equatable {
   let fetchedDate: Date?
-  let isPresentingThird: Bool
 
   init(state: SecondState) {
     fetchedDate = state.fetchedDate
-    isPresentingThird = state.isPresentingThird
   }
 }
 
@@ -96,23 +80,10 @@ struct SecondView: View {
               .padding()
           }
 
-          NavigationLink(
-            destination: IfLetStore(
-              store.scope(
-                state: \.third,
-                action: SecondAction.third
-              ),
-              then: ThirdView.init(store:)
-            ),
-            isActive: viewStore.binding(
-              get: \.isPresentingThird,
-              send: SecondAction.presentThird
-            ),
-            label: {
-              Text("Present Third")
-                .padding()
-            }
-          )
+          Button(action: { viewStore.send(.presentThird(true)) }) {
+            Text("Present Third")
+              .padding()
+          }
         }
         .frame(maxWidth: .infinity)
         .background(Color.primary.colorInvert())
@@ -122,8 +93,17 @@ struct SecondView: View {
       .navigationTitle("Second")
       .navigationBarTitleDisplayMode(.inline)
       .onAppear { viewStore.send(.didAppear) }
-      .onDisappear { viewStore.send(.didDisappear) }
     }
+    .navigate(
+      using: store.scope(
+        state: \.third,
+        action: SecondAction.third
+      ),
+      onDismiss: {
+        ViewStore(store.stateless).send(.presentThird(false))
+      },
+      destination: ThirdView.init(store:)
+    )
   }
 }
 
