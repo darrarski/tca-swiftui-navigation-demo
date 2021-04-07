@@ -34,7 +34,6 @@ final class DemoAppTests: XCTestCase {
 
     store.assert(
       .send(.first(.presentSecond(true))) {
-        $0.first.isPresentingSecond = true
         $0.first.second = SecondState()
       },
       .send(.first(.second(.didAppear))) {
@@ -42,22 +41,15 @@ final class DemoAppTests: XCTestCase {
       },
       .receive(.first(.second(.fetchDate))),
       .send(.first(.second(.presentThird(true)))) {
-        $0.first.second!.isPresentingThird = true
         $0.first.second!.third = ThirdState()
       },
       .send(.first(.second(.third(.didAppear)))) {
         $0.first.second!.third!.timerId = latestId
       },
       .send(.first(.second(.presentThird(false)))) {
-        $0.first.second!.isPresentingThird = false
-      },
-      .send(.first(.second(.third(.didDisappear)))) {
         $0.first.second!.third = nil
       },
       .send(.first(.presentSecond(false))) {
-        $0.first.isPresentingSecond = false
-      },
-      .send(.first(.second(.didDisappear))) {
         $0.first.second = nil
       }
     )
@@ -87,7 +79,6 @@ final class DemoAppTests: XCTestCase {
 
     store.assert(
       .send(.first(.presentSecond(true))) {
-        $0.first.isPresentingSecond = true
         $0.first.second = SecondState()
       },
       .send(.first(.second(.didAppear))) {
@@ -95,7 +86,6 @@ final class DemoAppTests: XCTestCase {
       },
       .receive(.first(.second(.fetchDate))),
       .send(.first(.second(.presentThird(true)))) {
-        $0.first.second!.isPresentingThird = true
         $0.first.second!.third = ThirdState()
       },
       .send(.first(.second(.third(.didAppear)))) {
@@ -103,9 +93,6 @@ final class DemoAppTests: XCTestCase {
       },
       .send(.first(.second(.third(.dismissToFirst)))),
       .receive(.first(.presentSecond(false))) {
-        $0.first.isPresentingSecond = false
-      },
-      .send(.first(.second(.third(.didDisappear)))) {
         $0.first.second = nil
       }
     )

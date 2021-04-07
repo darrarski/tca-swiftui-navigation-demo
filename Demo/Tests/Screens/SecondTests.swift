@@ -9,7 +9,6 @@ final class SecondTests: XCTestCase {
     let store = TestStore(
       initialState: SecondState(
         fetchId: UUID(),
-        isPresentingThird: false,
         third: nil
       ),
       reducer: secondReducer,
@@ -22,7 +21,6 @@ final class SecondTests: XCTestCase {
 
     store.assert(
       .send(.presentThird(true)) {
-        $0.isPresentingThird = true
         $0.third = ThirdState()
       }
     )
@@ -32,7 +30,6 @@ final class SecondTests: XCTestCase {
     let store = TestStore(
       initialState: SecondState(
         fetchId: UUID(),
-        isPresentingThird: true,
         third: ThirdState(
           timerId: UUID()
         )
@@ -47,9 +44,6 @@ final class SecondTests: XCTestCase {
 
     store.assert(
       .send(.presentThird(false)) {
-        $0.isPresentingThird = false
-      },
-      .send(.third(.didDisappear)) {
         $0.third = nil
       }
     )
@@ -87,7 +81,6 @@ final class SecondTests: XCTestCase {
         $0.fetchedDate = Date(timeIntervalSince1970: 1)
       },
       .receive(.fetchDate),
-      .send(.didDisappear),
       .do {
         fetcher.send(Date(timeIntervalSince1970: 2))
       },
