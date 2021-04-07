@@ -10,6 +10,7 @@ enum ThirdAction: Equatable {
   case didAppear
   case didTimerTick(Date)
   case dismissToFirst
+  case didDisappear
 }
 
 let thirdReducer = Reducer<ThirdState, ThirdAction, DemoAppEnvironment> { state, action, environment in
@@ -30,6 +31,11 @@ let thirdReducer = Reducer<ThirdState, ThirdAction, DemoAppEnvironment> { state,
 
   case .dismissToFirst:
     return .none
+
+  case .didDisappear:
+    let timerId = state.timerId
+    state.timerId = nil
+    return .cancel(id: timerId)
   }
 }
 
@@ -75,6 +81,7 @@ struct ThirdView: View {
       .navigationTitle("Third")
       .navigationBarTitleDisplayMode(.inline)
       .onAppear { viewStore.send(.didAppear) }
+      .onDisappear { viewStore.send(.didDisappear) }
     }
   }
 }
