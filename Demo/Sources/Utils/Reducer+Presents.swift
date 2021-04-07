@@ -13,11 +13,16 @@ extension Reducer {
     let id = UUID()
     return Self { state, action, environment in
       let hadLocalState = state[keyPath: toLocalState] != nil
-      let localEffects = localReducer
-        .optional()
-        .pullback(state: toLocalState, action: toLocalAction, environment: toLocalEnvironment)
-        .run(&state, action, environment)
-        .cancellable(id: id)
+      let localEffects: Effect<Action, Never>
+      if hadLocalState {
+        localEffects = localReducer
+          .optional()
+          .pullback(state: toLocalState, action: toLocalAction, environment: toLocalEnvironment)
+          .run(&state, action, environment)
+          .cancellable(id: id)
+      } else {
+        localEffects = .none
+      }
       let globalEffects = self.run(&state, action, environment)
       let hasLocalState = state[keyPath: toLocalState] != nil
       return .merge(
