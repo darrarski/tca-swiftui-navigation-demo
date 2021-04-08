@@ -47,8 +47,7 @@ struct DemoApp: App {
               action: DemoAppAction.first
             ))
           }
-          // FIXME: ❌ no push animations when using stack navigation style
-          // .navigationViewStyle(StackNavigationViewStyle())
+          .navigationViewStyle(StackNavigationViewStyle())
         }
       }
     }
