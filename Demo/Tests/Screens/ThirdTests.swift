@@ -31,47 +31,46 @@ final class ThirdTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.didAppear) {
-        $0.timerId = idStub
-      },
-      .do {
-        XCTAssertTrue(didSubscribeToTimer)
-        didSubscribeToTimer = false
-        timer.send(Date(timeIntervalSince1970: 0))
-      },
-      .receive(.didTimerTick(Date(timeIntervalSince1970: 0))) {
-        $0.date = Date(timeIntervalSince1970: 0)
-      },
-      .do {
-        timer.send(Date(timeIntervalSince1970: 1))
-      },
-      .receive(.didTimerTick(Date(timeIntervalSince1970: 1))) {
-        $0.date = Date(timeIntervalSince1970: 1)
-      },
-      .send(.didDisappear) {
-        $0.timerId = nil
-      },
-      .do {
-        XCTAssertTrue(didCancelTimer)
-        didCancelTimer = false
-      },
-      .send(.didAppear) {
-        $0.timerId = idStub
-      },
-      .do {
-        XCTAssertTrue(didSubscribeToTimer)
-        didSubscribeToTimer = false
-      },
-      .send(.didAppear),
-      .send(.didDisappear) {
-        $0.timerId = nil
-      },
-      .do {
-        XCTAssertTrue(didCancelTimer)
-        didCancelTimer = false
-      }
-    )
+    store.send(.didAppear) {
+      $0.timerId = idStub
+    }
+
+    XCTAssertTrue(didSubscribeToTimer)
+    didSubscribeToTimer = false
+    timer.send(Date(timeIntervalSince1970: 0))
+
+    store.receive(.didTimerTick(Date(timeIntervalSince1970: 0))) {
+      $0.date = Date(timeIntervalSince1970: 0)
+    }
+
+    timer.send(Date(timeIntervalSince1970: 1))
+
+    store.receive(.didTimerTick(Date(timeIntervalSince1970: 1))) {
+      $0.date = Date(timeIntervalSince1970: 1)
+    }
+
+    store.send(.didDisappear) {
+      $0.timerId = nil
+    }
+
+    XCTAssertTrue(didCancelTimer)
+    didCancelTimer = false
+
+    store.send(.didAppear) {
+      $0.timerId = idStub
+    }
+
+    XCTAssertTrue(didSubscribeToTimer)
+    didSubscribeToTimer = false
+
+    store.send(.didAppear)
+
+    store.send(.didDisappear) {
+      $0.timerId = nil
+    }
+
+    XCTAssertTrue(didCancelTimer)
+    didCancelTimer = false
   }
 
   func testPreviewSnapshot() {

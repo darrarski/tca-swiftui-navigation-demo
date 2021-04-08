@@ -7,7 +7,6 @@ final class FirstTests: XCTestCase {
   func testPresentSecond() {
     let store = TestStore(
       initialState: FirstState(
-        isPresentingSecond: false,
         second: nil
       ),
       reducer: firstReducer,
@@ -18,18 +17,14 @@ final class FirstTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.presentSecond(true)) {
-        $0.isPresentingSecond = true
-        $0.second = SecondState()
-      }
-    )
+    store.send(.presentSecond(true)) {
+      $0.second = SecondState()
+    }
   }
 
   func testDismissSecond() {
     let store = TestStore(
       initialState: FirstState(
-        isPresentingSecond: true,
         second: SecondState(
           fetchId: UUID()
         )
@@ -42,23 +37,16 @@ final class FirstTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.presentSecond(false)) {
-        $0.isPresentingSecond = false
-      },
-      .send(.second(.didDisappear)) {
-        $0.second = nil
-      }
-    )
+    store.send(.presentSecond(false)) {
+      $0.second = nil
+    }
   }
 
   func testDismissFromThirdToFirst() {
     let store = TestStore(
       initialState: FirstState(
-        isPresentingSecond: true,
         second: SecondState(
           fetchId: UUID(),
-          isPresentingThird: true,
           third: ThirdState(
             timerId: UUID()
           )
@@ -72,15 +60,11 @@ final class FirstTests: XCTestCase {
       )
     )
 
-    store.assert(
-      .send(.second(.third(.dismissToFirst))),
-      .receive(.presentSecond(false)) {
-        $0.isPresentingSecond = false
-      },
-      .send(.second(.third(.didDisappear))) {
-        $0.second = nil
-      }
-    )
+    store.send(.second(.third(.dismissToFirst)))
+
+    store.receive(.presentSecond(false)) {
+      $0.second = nil
+    }
   }
 
   func testPreviewSnapshot() {

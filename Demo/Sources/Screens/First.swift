@@ -2,7 +2,6 @@ import ComposableArchitecture
 import SwiftUI
 
 struct FirstState: Equatable {
-  var isPresentingSecond = false
   var second: SecondState?
 }
 
@@ -11,44 +10,29 @@ enum FirstAction: Equatable {
   case second(SecondAction)
 }
 
-let firstReducer = Reducer<FirstState, FirstAction, DemoAppEnvironment>.combine(
-  secondReducer.optional().pullback(
-    state: \.second,
-    action: /FirstAction.second,
-    environment: { $0 }
-  ),
-  Reducer { state, action, environment in
-    switch action {
-    case let .presentSecond(present):
-      state.isPresentingSecond = present
-      if present {
-        state.second = SecondState()
-      }
-      return .none
+let firstReducer = Reducer<FirstState, FirstAction, DemoAppEnvironment> { state, action, environment in
+  switch action {
+  case let .presentSecond(present):
+    state.second = present ? SecondState() : nil
+    return .none
 
-    case .second(.didDisappear),
-         .second(.third(.didDisappear)):
-      if state.isPresentingSecond == false, let second = state.second {
-        state.second = nil
-        return cancelSecondReducerEffects(state: second)
-      }
-      return .none
+  case .second(.third(.dismissToFirst)):
+    return .init(value: .presentSecond(false))
 
-    case .second(.third(.dismissToFirst)):
-      return .init(value: .presentSecond(false))
-
-    case .second:
-      return .none
-    }
+  case .second:
+    return .none
   }
+}
+.presents(
+  secondReducer,
+  cancelEffectsOnDismiss: true,
+  state: \.second,
+  action: /FirstAction.second,
+  environment: { $0 }
 )
 
 struct FirstViewState: Equatable {
-  let isPresentingSecond: Bool
-
-  init(state: FirstState) {
-    isPresentingSecond = state.isPresentingSecond
-  }
+  init(state: FirstState) {}
 }
 
 struct FirstView: View {
@@ -62,20 +46,10 @@ struct FirstView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
 
-          NavigationLink(
-            destination: IfLetStore(
-              store.scope(
-                state: \.second,
-                action: FirstAction.second
-              ),
-              then: SecondView.init(store:)
-            ),
-            isActive: viewStore.binding(get: \.isPresentingSecond, send: FirstAction.presentSecond),
-            label: {
-              Text("Present Second")
-                .padding()
-            }
-          )
+          Button(action: { viewStore.send(.presentSecond(true)) }) {
+            Text("Present Second")
+              .padding()
+          }
         }
         .frame(maxWidth: .infinity)
         .background(Color.primary.colorInvert())
@@ -85,6 +59,16 @@ struct FirstView: View {
       .navigationTitle("First")
       .navigationBarTitleDisplayMode(.inline)
     }
+    .navigate(
+      using: store.scope(
+        state: \.second,
+        action: FirstAction.second
+      ),
+      onDismiss: {
+        ViewStore(store.stateless).send(.presentSecond(false))
+      },
+      destination: SecondView.init(store:)
+    )
   }
 }
 
