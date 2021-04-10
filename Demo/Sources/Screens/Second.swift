@@ -99,10 +99,10 @@ struct SecondView: View {
         state: \.third,
         action: SecondAction.third
       ),
+      destination: ThirdView.init(store:),
       onDismiss: {
         ViewStore(store.stateless).send(.presentThird(false))
-      },
-      destination: ThirdView.init(store:)
+      }
     )
   }
 }
