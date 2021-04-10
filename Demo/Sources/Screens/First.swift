@@ -64,10 +64,10 @@ struct FirstView: View {
         state: \.second,
         action: FirstAction.second
       ),
+      destination: SecondView.init(store:),
       onDismiss: {
         ViewStore(store.stateless).send(.presentSecond(false))
-      },
-      destination: SecondView.init(store:)
+      }
     )
   }
 }

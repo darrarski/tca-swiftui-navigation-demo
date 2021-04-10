@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31663C0F261E07CA00CB864E /* NavigationLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31663C0E261E07CA00CB864E /* NavigationLinkView.swift */; };
+		313890262621C4BC000DFF49 /* ReplayNonNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313890252621C4BC000DFF49 /* ReplayNonNil.swift */; };
+		313890302621C53E000DFF49 /* ReplayNonNilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3138902C2621C52B000DFF49 /* ReplayNonNilTests.swift */; };
+		31663C0F261E07CA00CB864E /* NavigationLink+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31663C0E261E07CA00CB864E /* NavigationLink+Store.swift */; };
 		31667548256436AF00F91380 /* DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31667547256436AF00F91380 /* DemoApp.swift */; };
 		3166754C256436B000F91380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3166754B256436B000F91380 /* Assets.xcassets */; };
 		3166755D2564378100F91380 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 3166755C2564378100F91380 /* ComposableArchitecture */; };
@@ -35,7 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		31663C0E261E07CA00CB864E /* NavigationLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLinkView.swift; sourceTree = "<group>"; };
+		313890252621C4BC000DFF49 /* ReplayNonNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayNonNil.swift; sourceTree = "<group>"; };
+		3138902C2621C52B000DFF49 /* ReplayNonNilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayNonNilTests.swift; sourceTree = "<group>"; };
+		31663C0E261E07CA00CB864E /* NavigationLink+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationLink+Store.swift"; sourceTree = "<group>"; };
 		31667544256436AF00F91380 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31667547256436AF00F91380 /* DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoApp.swift; sourceTree = "<group>"; };
 		3166754B256436B000F91380 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -74,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3138902B2621C50E000DFF49 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3138902C2621C52B000DFF49 /* ReplayNonNilTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		3166753B256436AF00F91380 = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +120,7 @@
 			children = (
 				318E05D325671A540029DF49 /* App */,
 				3182EA8C2566FADF00C9EDD8 /* Screens */,
+				3138902B2621C50E000DFF49 /* Utils */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -181,8 +194,9 @@
 		31CBFF6D261D08E2000A3757 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				31663C0E261E07CA00CB864E /* NavigationLinkView.swift */,
+				31663C0E261E07CA00CB864E /* NavigationLink+Store.swift */,
 				31CBFF6E261D08F5000A3757 /* Reducer+Presents.swift */,
+				313890252621C4BC000DFF49 /* ReplayNonNil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -295,7 +309,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31663C0F261E07CA00CB864E /* NavigationLinkView.swift in Sources */,
+				31663C0F261E07CA00CB864E /* NavigationLink+Store.swift in Sources */,
+				313890262621C4BC000DFF49 /* ReplayNonNil.swift in Sources */,
 				31908F3025654ECF00D2C990 /* DemoAppEnvironment.swift in Sources */,
 				31A9440F25654FFE00AD163B /* TimeFormatter.swift in Sources */,
 				31908F2525654E5000D2C990 /* First.swift in Sources */,
@@ -312,6 +327,7 @@
 			files = (
 				3182EA8E2566FAF500C9EDD8 /* FirstTests.swift in Sources */,
 				3182EA9B2567038100C9EDD8 /* ThirdTests.swift in Sources */,
+				313890302621C53E000DFF49 /* ReplayNonNilTests.swift in Sources */,
 				3182EA972566FF4600C9EDD8 /* SecondTests.swift in Sources */,
 				318E05D525671A6A0029DF49 /* DemoAppTests.swift in Sources */,
 			);
