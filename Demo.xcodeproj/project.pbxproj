@@ -25,7 +25,9 @@
 		31A9440F25654FFE00AD163B /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A9440E25654FFE00AD163B /* TimeFormatter.swift */; };
 		31CBFF6F261D08F5000A3757 /* Reducer+Presents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CBFF6E261D08F5000A3757 /* Reducer+Presents.swift */; };
 		31DAD93826225A9200A63400 /* Reducer+CaptureState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DAD93726225A9200A63400 /* Reducer+CaptureState.swift */; };
+		31DAD93C26225AD900A63400 /* Reducer+ReplaceNilState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DAD93B26225AD900A63400 /* Reducer+ReplaceNilState.swift */; };
 		31DAD94026225B1C00A63400 /* ReducerCaptureStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DAD93F26225B1C00A63400 /* ReducerCaptureStateTests.swift */; };
+		31DAD94B26225CFB00A63400 /* ReducerReplaceNilStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DAD94726225CF700A63400 /* ReducerReplaceNilStateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +61,9 @@
 		31A9440E25654FFE00AD163B /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		31CBFF6E261D08F5000A3757 /* Reducer+Presents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reducer+Presents.swift"; sourceTree = "<group>"; };
 		31DAD93726225A9200A63400 /* Reducer+CaptureState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reducer+CaptureState.swift"; sourceTree = "<group>"; };
+		31DAD93B26225AD900A63400 /* Reducer+ReplaceNilState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reducer+ReplaceNilState.swift"; sourceTree = "<group>"; };
 		31DAD93F26225B1C00A63400 /* ReducerCaptureStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReducerCaptureStateTests.swift; sourceTree = "<group>"; };
+		31DAD94726225CF700A63400 /* ReducerReplaceNilStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReducerReplaceNilStateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				31DAD93F26225B1C00A63400 /* ReducerCaptureStateTests.swift */,
+				31DAD94726225CF700A63400 /* ReducerReplaceNilStateTests.swift */,
 				3138902C2621C52B000DFF49 /* ReplayNonNilTests.swift */,
 			);
 			path = Utils;
@@ -203,6 +208,7 @@
 				31CBFF6E261D08F5000A3757 /* Reducer+Presents.swift */,
 				313890252621C4BC000DFF49 /* ReplayNonNil.swift */,
 				31DAD93726225A9200A63400 /* Reducer+CaptureState.swift */,
+				31DAD93B26225AD900A63400 /* Reducer+ReplaceNilState.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -324,6 +330,7 @@
 				31908F2C25654E9B00D2C990 /* Third.swift in Sources */,
 				31667548256436AF00F91380 /* DemoApp.swift in Sources */,
 				31CBFF6F261D08F5000A3757 /* Reducer+Presents.swift in Sources */,
+				31DAD93C26225AD900A63400 /* Reducer+ReplaceNilState.swift in Sources */,
 				31908F2925654E7500D2C990 /* Second.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,6 +341,7 @@
 			files = (
 				3182EA8E2566FAF500C9EDD8 /* FirstTests.swift in Sources */,
 				3182EA9B2567038100C9EDD8 /* ThirdTests.swift in Sources */,
+				31DAD94B26225CFB00A63400 /* ReducerReplaceNilStateTests.swift in Sources */,
 				31DAD94026225B1C00A63400 /* ReducerCaptureStateTests.swift in Sources */,
 				313890302621C53E000DFF49 /* ReplayNonNilTests.swift in Sources */,
 				3182EA972566FF4600C9EDD8 /* SecondTests.swift in Sources */,
