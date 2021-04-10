@@ -1,6 +1,7 @@
-// Source: https://github.com/Thomvis/Construct/blob/f165fd005cd939560c1a4eb8d6ee55075a52685d/Construct/Foundation/Memoize.swift
-
 /// Converts a closure (A) -> B? to a closure that returns last non-`nil` B returned by the input closure
+///
+/// Based on a code from [Thomvis/Construct repository](https://github.com/Thomvis/Construct/blob/f165fd005cd939560c1a4eb8d6ee55075a52685d/Construct/Foundation/Memoize.swift)
+///
 /// - Parameter inputClosure: input closure
 /// - Returns: output closure
 func replayNonNil<A, B>(_ inputClosure: @escaping (A) -> B?) -> (A) -> B? {
