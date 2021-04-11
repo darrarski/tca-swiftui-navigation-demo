@@ -25,7 +25,6 @@ let firstReducer = Reducer<FirstState, FirstAction, DemoAppEnvironment> { state,
 }
 .presents(
   secondReducer,
-  cancelEffectsOnDismiss: true,
   state: \.second,
   action: /FirstAction.second,
   environment: { $0 }

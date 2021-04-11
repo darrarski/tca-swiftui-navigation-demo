@@ -8,13 +8,13 @@ extension NavigationLink {
   /// - Link's destination is generated using last non-`nil` state value.
   ///
   /// - Parameters:
-  ///   - store: store with optional state
-  ///   - destination: closure that creates link's destination view
-  ///   - destinationStore: store with non-optional state
-  ///   - action: closure invoked when link is activated or deactivated
-  ///   - isActive: determines if the link is active or inactive
-  ///   - label: link's label
-  /// - Returns: navigation link wrapped in a `WithViewStore` view
+  ///   - store: A store with optional state.
+  ///   - destination: A closure that creates link's destination view.
+  ///   - destinationStore: A store with non-optional state.
+  ///   - action: A closure invoked when the link is activated or deactivated.
+  ///   - isActive: Determines if the link is active or inactive.
+  ///   - label: The link's label.
+  /// - Returns: Navigation link wrapped in a `WithViewStore`.
   static func store<State, Action, DestinationContent>(
     _ store: Store<State?, Action>,
     destination: @escaping (_ destinationStore: Store<State, Action>) -> DestinationContent,
