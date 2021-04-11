@@ -40,7 +40,7 @@ final class ReducerPresentesTests: XCTestCase {
     didCancelEffect = false
 
     // All actions sent to the store at this point will be dispatched with a last non-`nil` state.
-    // Effects returned by those actions will be canceled immediately.
+    // Effects returned by these actions will be canceled immediately.
 
     store.send(.detail(.performEffect))
 
