@@ -1,14 +1,14 @@
 import ComposableArchitecture
 
 extension Reducer {
-  /// Replaces `nil` state with provided value
+  /// Replaces `nil` state with provided value.
   ///
-  /// - If reducer is run with non-`nil` state its behavior is unchanged
-  /// - If reducer is run with a `nil` state, replacement state is used instead
+  /// - If reducer is run with non-`nil` state its behavior is unchanged.
+  /// - If reducer is run with a `nil` state, replacement state is used instead.
   /// - When replacement state is used, the original state wont be mutated!
   ///
-  /// - Parameter replacement: the replacement state value
-  /// - Returns: reducer
+  /// - Parameter replacement: The replacement state value.
+  /// - Returns: A reducer that works on `State`, `Action`, `Environment`.
   func replaceNilState<S>(
     with replacement: @escaping @autoclosure () -> S?
   ) -> Self where State == Optional<S> {
